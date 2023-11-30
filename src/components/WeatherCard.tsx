@@ -1,3 +1,4 @@
+//Imports
 import React, { useState, ChangeEvent } from 'react';
 import { Sun, Moon, Cloud, CloudDrizzle, CloudRain, CloudLightning, CloudSnow, Search, Droplet, Wind, CloudOff } from 'react-feather';
 
@@ -14,6 +15,7 @@ interface WeatherCardProps {
   onLocationChange: (newLocation: string) => void;
 }
 
+//Function that returns an iconCode and a backgroundColor depending on the weather condition
 const getConditionStyles = (iconCode: string) => {
   const commonProps = {
 	size: 135,
@@ -89,7 +91,8 @@ const WeatherCard: React.FC<WeatherCardProps> = ({
   onLocationChange,
 }) => {
   const [value, setValue] = useState('Monterrey');
-
+  
+  //Events handler function
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 	setValue(event.target.value);
   };

@@ -15,6 +15,7 @@ const Home: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [location, setLocation] = useState('Monterrey');
 
+  //Fetch the data using weatherService.ts
   const fetchData = async (city: string) => {
 	  const { data, error } = await getWeatherData(city);
   
