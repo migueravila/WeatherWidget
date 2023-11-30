@@ -42,11 +42,29 @@ const Home: React.FC = () => {
 	}
   };
 	
-  return (
-	<div className="flex items-center justify-center h-screen">
-	  <WeatherCard/>
-	</div>
-  );
+  useEffect(() => {
+	  getWeatherData(location);
+	}, [location]); // Re-fetch when the location changes
+  
+	return (
+	  <div className="flex items-center justify-center h-screen">
+		<WeatherCard
+		  city={weatherData?.city || 'DefaultCity'}
+		  temperature={weatherData?.temperature || 0}
+		  temperatureMax={weatherData?.temperatureMax || 0}
+		  temperatureMin={weatherData?.temperatureMin || 0}
+		  windSpeed={weatherData?.windSpeed || 0}
+		  humidity={weatherData?.humidity || 0}
+		  description={weatherData?.description || ''}
+		  iconCode={weatherData?.iconCode || ''}
+		  error={error}
+		  onLocationChange={(newLocation) => {
+			  setLocation(newLocation);
+			  setError(null);
+		  }}
+		/>
+	  </div>
+	);
 };
 
 export default Home;
