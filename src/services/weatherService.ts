@@ -11,8 +11,8 @@ const getWeatherData = async (city: string) => {
 	if (response.data.cod !== 200) {
 	  return { error: response.data.message, data: null };
 	}
-	
-	//Returning weather data if status code is 200 (OK)
+
+	// Returning weather data if status code is 200 (OK)
 	return {
 	  error: null,
 	  data: {
@@ -27,8 +27,13 @@ const getWeatherData = async (city: string) => {
 	  },
 	};
   } catch (error) {
-	//return error message in case there's an error  
-	return { error: 'Unrecognized city', data: null };
+	if (error.isAxiosError && !error.response) {
+	  // Network error, provide a custom message
+	  return { error: 'Network error, please check your internet connection', data: null };
+	}
+
+	// Other errors, return a general error message
+	return { error: 'Unrecognized city or an unexpected error occurred', data: null };
   }
 };
 
