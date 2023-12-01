@@ -18,7 +18,7 @@ interface WeatherCardProps {
 //Function that returns an iconCode and a backgroundColor depending on the weather condition
 const getConditionStyles = (iconCode: string) => {
   const commonProps = {
-	size: 135,
+	size: 115,
   };
 
   const weatherConditionColors: { [key: string]: string } = {
@@ -104,8 +104,8 @@ const WeatherCard: React.FC<WeatherCardProps> = ({
   const { iconComponent, backgroundColor } = getConditionStyles(iconCode);
 
   return (
-	<div className="flex flex-row items-center justify-between max-w-md w-full bg-white rounded-xl overflow-hidden shadow-lg">
-	  <div className="w-96 p-6">
+	<div className="flex flex-col-reverse sm:flex-row items-center justify-between max-w-xs sm:max-w-lg w-full bg-white rounded-xl overflow-hidden shadow-lg">
+	  <div className="flex flex-col items-center sm:items-start w-96 p-6">
 		<div className="text-7xl font-bold mb-2 md:mb-0">{Math.round(temperature)}°</div>
 		<div className="text-gray-600 capitalize mb-2">
 		  ▲{Math.round(temperatureMin)}°  ▼{Math.round(temperatureMax)}°
@@ -130,14 +130,14 @@ const WeatherCard: React.FC<WeatherCardProps> = ({
 			</button>
 		  </div>
 	  </div>
-	  <div className={`flex flex-col items-center h-72 w-72 justify-center p-6 text-white ${backgroundColor}`}>
+	  <div className={`flex flex-col items-center h-80 w-80 justify-center p-6 text-white ${backgroundColor}`}>
 		{iconComponent}
 		<div className="flex flex-row items-center justify-between mt-6">
 		  <div className="flex flex-row items-center w-20">
 			<Droplet size={30} />
 			<p className="ml-1">{humidity}%</p>
 		  </div>
-		  <div className="flex flex-row items-center w-20 ml-2">
+		  <div className="flex flex-row items-center w-20">
 			<Wind size={30} />
 			<p className="ml-1">{Math.round(windSpeed)}m/s</p>
 		  </div>
