@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 // Asynchronous function to fetch weather data for a given location
 const getWeatherData = async (city: string) => {
@@ -7,32 +7,27 @@ const getWeatherData = async (city: string) => {
 	  `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY}`
 	);
 
-	// Error handling
-	if (response.data.cod !== 200) {
-	  return { error: response.data.message, data: null };
+	// Check for successful response (status code 200)
+	if (response.status === 200) {
+	  return {
+		error: null,
+		data: {
+		  city: response.data.name,
+		  temperature: response.data.main.temp,
+		  temperatureMax: response.data.main.temp_max,
+		  temperatureMin: response.data.main.temp_min,
+		  windSpeed: response.data.wind.speed,
+		  humidity: response.data.main.humidity,
+		  description: response.data.weather[0].description,
+		  iconCode: response.data.weather[0].icon,
+		},
+	  };
+	} else {
+	  // Handle OpenWeatherMap API error
+	  return { error: `OpenWeatherMap API error: Status ${response.status}`, data: null };
 	}
-
-	// Returning weather data if status code is 200 (OK)
-	return {
-	  error: null,
-	  data: {
-		city: response.data.name,
-		temperature: response.data.main.temp,
-		temperatureMax: response.data.main.temp_max,
-		temperatureMin: response.data.main.temp_min,
-		windSpeed: response.data.wind.speed,
-		humidity: response.data.main.humidity,
-		description: response.data.weather[0].description,
-		iconCode: response.data.weather[0].icon,
-	  },
-	};
-  } catch (error: unknown) {
-	if (axios.isAxiosError(error)) {
-	  // Network error, provide a custom message
-	  return { error: 'Network error, please check your internet connection', data: null };
-	}
-
-	// Other errors, return a general error message
+  } catch {
+	// Other possible error
 	return { error: 'Unrecognized city or an unexpected error occurred', data: null };
   }
 };
