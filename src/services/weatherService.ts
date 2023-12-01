@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 // Asynchronous function to fetch weather data for a given location
 const getWeatherData = async (city: string) => {
@@ -26,8 +26,8 @@ const getWeatherData = async (city: string) => {
 		iconCode: response.data.weather[0].icon,
 	  },
 	};
-  } catch (error) {
-	if (error.isAxiosError && !error.response) {
+  } catch (error: unknown) {
+	if (axios.isAxiosError(error)) {
 	  // Network error, provide a custom message
 	  return { error: 'Network error, please check your internet connection', data: null };
 	}
