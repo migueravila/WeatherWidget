@@ -9,11 +9,24 @@ import WeatherCard from '../components/WeatherCard';
 //Services
 import getWeatherData from '../services/weatherService';
 
+
+// Interface for WeatherData
+interface WeatherData {
+  city: string;
+  temperature: number;
+  temperatureMax: number;
+  temperatureMin: number;
+  windSpeed: number;
+  humidity: number;
+  description: string;
+  iconCode: string;
+}
+
 //Main Index Component
 const Home: React.FC = () => {
-  const [weatherData, setWeatherData] = useState(null);
-  const [error, setError] = useState<string | null>(null);
-  const [location, setLocation] = useState('Monterrey');
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+	const [error, setError] = useState<string>('');
+	const [location, setLocation] = useState<string>('Monterrey');
 
   //Fetch the data using weatherService.ts
   const fetchData = async (city: string) => {
@@ -23,7 +36,7 @@ const Home: React.FC = () => {
 		setError(error);
 		setWeatherData(null);
 	  } else {
-		setError(null);
+		setError('');
 		setWeatherData(data);
 	  }
 	};
@@ -46,7 +59,7 @@ const Home: React.FC = () => {
 		  error={error}
 		  onLocationChange={(newLocation) => {
 			  setLocation(newLocation);
-			  setError(null);
+			  setError('');
 		  }}
 		/>
 	  </div>

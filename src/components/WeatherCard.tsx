@@ -11,7 +11,7 @@ interface WeatherCardProps {
   humidity: number;
   description: string;
   iconCode: string;
-  error: string | null;
+  error: string;
   onLocationChange: (newLocation: string) => void;
 }
 
@@ -90,7 +90,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({
   error,
   onLocationChange,
 }) => {
-  const [value, setValue] = useState('Monterrey');
+  const [value, setValue] = useState<string>('Monterrey');
   
   //Events handler function
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
