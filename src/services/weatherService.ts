@@ -28,7 +28,7 @@ const getWeatherData = async (city: string) => {
 	}
   } catch {
 	// Other possible error
-	return { error: 'Unrecognized city or an unexpected error occurred', data: null };
+	return { error: 'Unrecognized city.', data: null };
   }
 };
 
